@@ -36,7 +36,7 @@ namespace Utils
     /// This is so that observers can undo events, etc on the list after it has been cleared and
     /// raised a CollectionChanged event with a Reset action.
     /// </summary>
-    public class ImpObservableCollection<T> : ObservableCollection<T>, ICloneable
+    public class ImpObservableCollection<T> : ObservableCollection<T>, ICloneable where T : ICloneable
     {
         /// <summary>
         /// Inner list.
@@ -229,7 +229,7 @@ namespace Utils
         public object Clone()
         {
             var clone = new ImpObservableCollection<T>();
-            foreach (ICloneable obj in this)
+            foreach (var obj in this)
             {
                 clone.Add((T)obj.Clone());
             }
