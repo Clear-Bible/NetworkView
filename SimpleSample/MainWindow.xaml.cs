@@ -43,7 +43,7 @@ namespace SampleCode
         private void networkControl_ConnectionDragStarted(object sender, ConnectionDragStartedEventArgs e)
         {
             var draggedOutConnector = (ConnectorViewModel)e.ConnectorDraggedOut;
-            var curDragPoint = Mouse.GetPosition(networkControl);
+            var curDragPoint = Mouse.GetPosition(NetworkControl);
 
             //
             // Delegate the real work to the view model.
@@ -62,7 +62,7 @@ namespace SampleCode
         /// </summary>
         private void networkControl_ConnectionDragging(object sender, ConnectionDraggingEventArgs e)
         {
-            var curDragPoint = Mouse.GetPosition(networkControl);
+            var curDragPoint = Mouse.GetPosition(NetworkControl);
             var connection = (ConnectionViewModel)e.Connection;
             ViewModel.ConnectionDragging(connection, curDragPoint);
         }
@@ -91,7 +91,7 @@ namespace SampleCode
         /// </summary>
         private void CreateNode_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            var newNodeLocation = Mouse.GetPosition(networkControl);
+            var newNodeLocation = Mouse.GetPosition(NetworkControl);
             ViewModel.CreateNode("New Node!", newNodeLocation);
         }
 
