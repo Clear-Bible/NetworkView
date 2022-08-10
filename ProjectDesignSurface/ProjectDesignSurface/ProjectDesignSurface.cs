@@ -7,10 +7,9 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
-using ClearDashboard.ProjectDesignSurface.Utils;
-using NetworkUI;
+using ClearDashboard.Wpf.Controls.Utils;
 
-namespace ClearDashboard.ProjectDesignSurface
+namespace ClearDashboard.Wpf.Controls
 {
     public partial class ProjectDesignSurface : Control
     {
@@ -487,7 +486,7 @@ namespace ClearDashboard.ProjectDesignSurface
         }
 
         /// <summary>
-        /// An event raised when the nodes selected in the NetworkView has changed.
+        /// An event raised when the nodes selected in the ProjectDesignSurface has changed.
         /// </summary>
         public event SelectionChangedEventHandler SelectionChanged;
 
@@ -693,12 +692,12 @@ namespace ClearDashboard.ProjectDesignSurface
         /// </summary>
         private static void NodesSource_PropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var networkView = (ProjectDesignSurface)d;
+            var projectDesignSurface = (ProjectDesignSurface)d;
 
             //
             // Clear 'Nodes'.
             //
-            networkView.Nodes.Clear();
+            projectDesignSurface.Nodes.Clear();
 
             if (e.OldValue != null)
             {
@@ -707,7 +706,7 @@ namespace ClearDashboard.ProjectDesignSurface
                     //
                     // Unhook events from previous collection.
                     //
-                    notifyCollectionChanged.CollectionChanged -= networkView.NodesSource_CollectionChanged;
+                    notifyCollectionChanged.CollectionChanged -= projectDesignSurface.NodesSource_CollectionChanged;
                 }
             }
 
@@ -720,7 +719,7 @@ namespace ClearDashboard.ProjectDesignSurface
                     //
                     foreach (var obj in enumerable)
                     {
-                        networkView.Nodes.Add(obj);
+                        projectDesignSurface.Nodes.Add(obj);
                     }
                 }
 
@@ -729,7 +728,7 @@ namespace ClearDashboard.ProjectDesignSurface
                     //
                     // Hook events in new collection.
                     //
-                    notifyCollectionChanged.CollectionChanged += networkView.NodesSource_CollectionChanged;
+                    notifyCollectionChanged.CollectionChanged += projectDesignSurface.NodesSource_CollectionChanged;
                 }
             }
         }
@@ -858,7 +857,7 @@ namespace ClearDashboard.ProjectDesignSurface
 
         /// <summary>
         /// Called after the visual tree of the control has been built.
-        /// Search for and cache references to named parts defined in the XAML control template for NetworkView.
+        /// Search for and cache references to named parts defined in the XAML control template for ProjectDesignSurface.
         /// </summary>
         public override void OnApplyTemplate()
         {
@@ -871,7 +870,7 @@ namespace ClearDashboard.ProjectDesignSurface
             _nodeItemsControl = (NodeItemsControl)Template.FindName("PART_NodeItemsControl", this);
             if (_nodeItemsControl == null)
             {
-                throw new ApplicationException("Failed to find 'PART_NodeItemsControl' in the visual tree for 'NetworkView'.");
+                throw new ApplicationException("Failed to find 'PART_NodeItemsControl' in the visual tree for 'ProjectDesignSurface'.");
             }
 
             //
@@ -892,19 +891,19 @@ namespace ClearDashboard.ProjectDesignSurface
             _connectionItemsControl = (ItemsControl)Template.FindName("PART_ConnectionItemsControl", this);
             if (_connectionItemsControl == null)
             {
-                throw new ApplicationException("Failed to find 'PART_ConnectionItemsControl' in the visual tree for 'NetworkView'.");
+                throw new ApplicationException("Failed to find 'PART_ConnectionItemsControl' in the visual tree for 'ProjectDesignSurface'.");
             }
 
             _dragSelectionCanvas = (FrameworkElement)Template.FindName("PART_DragSelectionCanvas", this);
             if (_dragSelectionCanvas == null)
             {
-                throw new ApplicationException("Failed to find 'PART_DragSelectionCanvas' in the visual tree for 'NetworkView'.");
+                throw new ApplicationException("Failed to find 'PART_DragSelectionCanvas' in the visual tree for 'ProjectDesignSurface'.");
             }
 
             _dragSelectionBorder = (FrameworkElement)Template.FindName("PART_DragSelectionBorder", this);
             if (_dragSelectionBorder == null)
             {
-                throw new ApplicationException("Failed to find 'PART_dragSelectionBorder' in the visual tree for 'NetworkView'.");
+                throw new ApplicationException("Failed to find 'PART_dragSelectionBorder' in the visual tree for 'ProjectDesignSurface'.");
             }
         }
 

@@ -2,9 +2,8 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using NetworkUI;
 
-namespace ClearDashboard.ProjectDesignSurface
+namespace ClearDashboard.Wpf.Controls
 {
     /// <summary>
     /// This is the UI element for a connector.
@@ -19,7 +18,7 @@ namespace ClearDashboard.ProjectDesignSurface
 
         internal static readonly DependencyProperty ParentProjectDesignSurfaceProperty =
             DependencyProperty.Register("ParentProjectDesignSurface", typeof(ProjectDesignSurface), typeof(ConnectorItem),
-                new FrameworkPropertyMetadata(ParentNetworkView_PropertyChanged));
+                new FrameworkPropertyMetadata(ParentProjectDesignSurface_PropertyChanged));
 
         internal static readonly DependencyProperty ParentNodeItemProperty =
             DependencyProperty.Register("ParentNodeItem", typeof(NodeItem), typeof(ConnectorItem));
@@ -284,9 +283,9 @@ namespace ClearDashboard.ProjectDesignSurface
         }
 
         /// <summary>
-        /// Event raised when 'ParentNetworkView' property has changed.
+        /// Event raised when 'ParentProjectDesignSurface' property has changed.
         /// </summary>
-        private static void ParentNetworkView_PropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void ParentProjectDesignSurface_PropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var connectorItem = (ConnectorItem)d;
             connectorItem.UpdateHotspot();
@@ -307,14 +306,14 @@ namespace ClearDashboard.ProjectDesignSurface
         {
             if (ParentProjectDesignSurface == null)
             {
-                // No parent NetworkView is set.
+                // No parent ProjectDesignSurface is set.
                 return;
             }
 
             if (!ParentProjectDesignSurface.IsAncestorOf(this))
             {
                 //
-                // The parent NetworkView is no longer an ancestor of the connector.
+                // The parent ProjectDesignSurface is no longer an ancestor of the connector.
                 // This happens when the connector (and its parent node) has been removed from the network.
                 // Reset the property null so we don't attempt to check again.
                 //
@@ -323,13 +322,13 @@ namespace ClearDashboard.ProjectDesignSurface
             }
 
             //
-            // The parent NetworkView is still valid.
+            // The parent ProjectDesignSurface is still valid.
             // Compute the center point of the connector.
             //
             var centerPoint = new Point(ActualWidth / 2, ActualHeight / 2);
 
             //
-            // Transform the center point so that it is relative to the parent NetworkView.
+            // Transform the center point so that it is relative to the parent ProjectDesignSurface.
             // Then assign it to Hotspot.  Usually Hotspot will be data-bound to the application
             // view-model using OneWayToSource so that the value of the hotspot is then pushed through
             // to the view-model.

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace ClearDashboard.ProjectDesignSurface.Utils
+namespace ClearDashboard.Wpf.Controls.Utils
 {
     /// <summary>
     /// Abstract base for view-model classes that need to implement INotifyPropertyChanged.

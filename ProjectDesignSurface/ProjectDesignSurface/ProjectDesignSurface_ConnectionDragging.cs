@@ -4,12 +4,12 @@ using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using ClearDashboard.ProjectDesignSurface.Utils;
+using ClearDashboard.Wpf.Controls.Utils;
 
-namespace ClearDashboard.ProjectDesignSurface
+namespace ClearDashboard.Wpf.Controls
 {
     /// <summary>
-    /// Partial definition of the NetworkView class.
+    /// Partial definition of the ProjectDesignSurface class.
     /// This file only contains private members related to dragging connections.
     /// </summary>
     public partial class ProjectDesignSurface
@@ -240,7 +240,7 @@ namespace ClearDashboard.ProjectDesignSurface
             if (projectDesignSurface != this)
             {
                 //
-                // Ensure that dragging over a connector in another NetworkView doesn't
+                // Ensure that dragging over a connector in another ProjectDesignSurface doesn't
                 // return a positive result.
                 //
                 return false;

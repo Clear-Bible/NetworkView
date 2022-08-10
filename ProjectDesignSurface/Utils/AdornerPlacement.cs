@@ -1,4 +1,4 @@
-﻿namespace ClearDashboard.ProjectDesignSurface.Utils
+﻿namespace ClearDashboard.Wpf.Controls.Utils
 {
     /// <summary>
     /// Specifies the placement of the adorner in related to the adorned control.

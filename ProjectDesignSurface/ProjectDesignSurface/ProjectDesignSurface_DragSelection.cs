@@ -4,10 +4,10 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
-namespace ClearDashboard.ProjectDesignSurface
+namespace ClearDashboard.Wpf.Controls
 {
     /// <summary>
-    /// Partial definition of the NetworkView class.
+    /// Partial definition of the ProjectDesignSurface class.
     /// This file only contains private members related to drag selection.
     /// </summary>
     public partial class ProjectDesignSurface

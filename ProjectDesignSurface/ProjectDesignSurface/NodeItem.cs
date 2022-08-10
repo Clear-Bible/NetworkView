@@ -2,9 +2,8 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using NetworkUI;
 
-namespace ClearDashboard.ProjectDesignSurface
+namespace ClearDashboard.Wpf.Controls
 {
     /// <summary>
     /// This is a UI element that represents a network/flow-chart node.
@@ -25,8 +24,8 @@ namespace ClearDashboard.ProjectDesignSurface
                 new FrameworkPropertyMetadata(0, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
 
         internal static readonly DependencyProperty ParentProjectDesignSurfaceProperty =
-            DependencyProperty.Register("ParentNetworkView", typeof(ProjectDesignSurface), typeof(NodeItem),
-                new FrameworkPropertyMetadata(ParentNetworkView_PropertyChanged));
+            DependencyProperty.Register("ParentProjectDesignSurface", typeof(ProjectDesignSurface), typeof(NodeItem),
+                new FrameworkPropertyMetadata(ParentProjectDesignSurface_PropertyChanged));
 
         internal static readonly RoutedEvent NodeDragStartedEvent =
             EventManager.RegisterRoutedEvent("NodeDragStarted", RoutingStrategy.Bubble, typeof(NodeDragStartedEventHandler), typeof(NodeItem));
@@ -77,7 +76,7 @@ namespace ClearDashboard.ProjectDesignSurface
         #region Private Data Members\Properties
 
         /// <summary>
-        /// Reference to the data-bound parent NetworkView.
+        /// Reference to the data-bound parent ProjectDesignSurface.
         /// </summary>
         internal ProjectDesignSurface ParentProjectDesignSurface
         {
@@ -396,9 +395,9 @@ namespace ClearDashboard.ProjectDesignSurface
         }
 
         /// <summary>
-        /// Event raised when the ParentNetworkView property has changed.
+        /// Event raised when the ParentProjectDesignSurface property has changed.
         /// </summary>
-        private static void ParentNetworkView_PropertyChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
+        private static void ParentProjectDesignSurface_PropertyChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
         {
             //
             // Bring new nodes to the front of the z-order.

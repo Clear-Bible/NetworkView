@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections;
 
-namespace ClearDashboard.ProjectDesignSurface.Utils
+namespace ClearDashboard.Wpf.Controls.Utils
 {
     /// <summary>
     /// Arguments to the ItemsAdded and ItemsRemoved events.

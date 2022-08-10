@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace ClearDashboard.ProjectDesignSurface
+namespace ClearDashboard.Wpf.Controls
 {
     /// <summary>
     /// Arguments for event raised when the user starts to drag a connector out from a node.

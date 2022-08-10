@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.Windows;
 using System.Windows.Media;
 
-namespace ClearDashboard.ProjectDesignSurface.Utils
+namespace ClearDashboard.Wpf.Controls.Utils
 {
     /// <summary>
     /// This class contains helper functions for dealing with WPF.

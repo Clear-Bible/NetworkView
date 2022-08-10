@@ -10,7 +10,7 @@ using System.Windows.Media;
 //
 //  http://www.codeproject.com/KB/WPF/WPFJoshSmith.aspx
 //
-namespace ClearDashboard.ProjectDesignSurface.Utils
+namespace ClearDashboard.Wpf.Controls.Utils
 {
     //
     // This class is an adorner that allows a FrameworkElement derived class to adorn another FrameworkElement.

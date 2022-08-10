@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using NetworkUI;
 
-namespace ClearDashboard.ProjectDesignSurface
+namespace ClearDashboard.Wpf.Controls
 {
     /// <summary>
-    /// Partial definition of the NetworkView class.
+    /// Partial definition of the ProjectDesignSurface class.
     /// This file only contains private members related to dragging nodes.
     /// </summary>
     public partial class ProjectDesignSurface

@@ -70,10 +70,6 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Remove="NetworkModel\ConnectionViewModel.cs" />
-    <Compile Remove="NetworkModel\ConnectorViewModel.cs" />
-    <Compile Remove="NetworkModel\NetworkViewModel.cs" />
-    <Compile Remove="NetworkModel\NodeViewModel.cs" />
     <Compile Remove="NetworkModel\obj\Debug\.NETFramework,Version=v4.0.AssemblyAttributes.cs" />
     <Compile Remove="NetworkModel\obj\Debug\net6.0-windows\.NETCoreApp,Version=v6.0.AssemblyAttributes.cs" />
     <Compile Remove="NetworkModel\Properties\AssemblyInfo.cs" />

@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Windows;
 
-namespace NetworkUI
+namespace ClearDashboard.Wpf.Controls
 {
     /// <summary>
     /// Base class for node dragging event args.

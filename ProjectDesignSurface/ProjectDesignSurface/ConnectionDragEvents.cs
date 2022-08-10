@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace ClearDashboard.ProjectDesignSurface
+namespace ClearDashboard.Wpf.Controls
 {
     /// <summary>
     /// Base class for connection dragging event args.

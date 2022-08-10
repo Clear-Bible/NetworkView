@@ -28,7 +28,7 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Diagnostics;
 
-namespace ClearDashboard.ProjectDesignSurface.Utils
+namespace ClearDashboard.Wpf.Controls.Utils
 {
     /// <summary>
     /// An implementation of observable collection that contains a duplicate internal
