@@ -28,6 +28,12 @@
 		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
 		<GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
 	</PropertyGroup>
+	<ItemGroup>
+	  <Compile Remove="ProjectDesignSurfaceModel\**" />
+	  <EmbeddedResource Remove="ProjectDesignSurfaceModel\**" />
+	  <None Remove="ProjectDesignSurfaceModel\**" />
+	  <Page Remove="ProjectDesignSurfaceModel\**" />
+	</ItemGroup>
   <ItemGroup>
     <Reference Update="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -44,7 +50,7 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ProjectDesignSurface\ClearDashboard.Wpf.Controls.csproj" />
+    <ProjectReference Include="..\ClearDashboard.Wpf.Controls\ClearDashboard.Wpf.Controls.csproj" />
     <ProjectReference Include="ProjectDesignSurfaceModel\AdvancedProjectDesignSurfaceModel.csproj" />
   </ItemGroup>
   <ItemGroup>
@@ -81,8 +87,5 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="ProjectDesignSurfaceModell\ConnectorViewModel.cs" />
-    <Compile Remove="ProjectDesignSurfaceModel\obj\Debug\.NETFramework,Version=v4.0.AssemblyAttributes.cs" />
-    <Compile Remove="ProjectDesignSurfaceModel\obj\Debug\net6.0-windows\.NETCoreApp,Version=v6.0.AssemblyAttributes.cs" />
-    <Compile Remove="ProjectDesignSurfaceModel\Properties\AssemblyInfo.cs" />
   </ItemGroup>
 </Project>

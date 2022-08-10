@@ -4,6 +4,7 @@
     xmlns:local="clr-namespace:SampleCode"
     xmlns:networkUi="clr-namespace:ClearDashboard.Wpf.Controls;assembly=ClearDashboard.Wpf.Controls"
     xmlns:projectDesignSurfaceModel="clr-namespace:ProjectDesignSurfaceModel"
+    xmlns:projectDesignSurfaceModel1="clr-namespace:ProjectDesignSurfaceModel;assembly=NetworkModel"
     Title="Main Window" 
     x:Name="mainWindow"
     MinWidth="400"
@@ -223,7 +224,7 @@
             In this sample a curved arrow represents connections between nodes.
             -->
             <DataTemplate
-                DataType="{x:Type projectDesignSurfaceModel:ConnectionViewModel}"
+                DataType="{x:Type projectDesignSurfaceModel1:ConnectionViewModel}"
                 >
 
                 <!-- 
@@ -285,7 +286,7 @@
 
             <!-- Define a data-template for the 'NodeViewModel' class. -->    
             <DataTemplate
-                DataType="{x:Type projectDesignSurfaceModel:NodeViewModel}"
+                DataType="{x:Type projectDesignSurfaceModel1:NodeViewModel}"
                 >
 
                 <!-- 

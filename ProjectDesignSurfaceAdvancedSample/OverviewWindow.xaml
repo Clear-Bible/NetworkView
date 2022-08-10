@@ -4,6 +4,7 @@
     xmlns:local="clr-namespace:SampleCode"
     xmlns:controls="clr-namespace:ClearDashboard.Wpf.Controls;assembly=ClearDashboard.Wpf.Controls"
     xmlns:projectDesignSurfaceModel="clr-namespace:ProjectDesignSurfaceModel"
+    xmlns:projectDesignSurfaceModel1="clr-namespace:ProjectDesignSurfaceModel;assembly=NetworkModel"
     Title="Overview" 
     Height="200" 
     Width="200" 
@@ -56,7 +57,7 @@
             In this sample a curved arrow represents connections between nodes.
             -->
             <DataTemplate 
-                DataType="{x:Type projectDesignSurfaceModel:ConnectionViewModel}"
+                DataType="{x:Type projectDesignSurfaceModel1:ConnectionViewModel}"
                 >
                 
                 <!-- The connection is represented by a curved arrow. -->
@@ -71,7 +72,7 @@
 
             <!-- Define a data-template for the 'NodeViewModel' class. -->    
             <DataTemplate
-                DataType="{x:Type projectDesignSurfaceModel:NodeViewModel}"
+                DataType="{x:Type projectDesignSurfaceModel1:NodeViewModel}"
                 >
                 
                 <!-- The margin has been selected so that the selection rect nicely covers the entire node. -->

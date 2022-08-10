@@ -24,8 +24,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentat
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClearDashboard.Wpf.Controls", "ProjectDesignSurface\ClearDashboard.Wpf.Controls.csproj", "{0CE7B5D0-036C-48BA-84A1-F629FC4DE72E}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjectDesignSurfaceSimpleSample", "ProjectDesignSurfaceSample\ProjectDesignSurfaceSimpleSample.csproj", "{07124BB1-DF08-4403-B8D5-B0AE6C7BF6DB}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{AB2139B7-9949-44D9-B896-5951979220FC}"
@@ -45,6 +43,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjectDesignSurfaceAdvancedSample", "ProjectDesignSurfaceAdvancedSample\ProjectDesignSurfaceAdvancedSample.csproj", "{D73FAB3B-0931-45E6-AABC-79175BD5355D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdvancedProjectDesignSurfaceModel", "ProjectDesignSurfaceAdvancedSample\ProjectDesignSurfaceModel\AdvancedProjectDesignSurfaceModel.csproj", "{579C2500-BCC6-4D15-8729-530916605643}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClearDashboard.Wpf.Controls", "ClearDashboard.Wpf.Controls\ClearDashboard.Wpf.Controls.csproj", "{4D10EC99-AFDF-4759-87D4-6CC83283346A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -84,10 +84,6 @@ Global
 		{468ADEDE-6F5E-40C0-99C9-C6DAC4FAC934}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{468ADEDE-6F5E-40C0-99C9-C6DAC4FAC934}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{468ADEDE-6F5E-40C0-99C9-C6DAC4FAC934}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0CE7B5D0-036C-48BA-84A1-F629FC4DE72E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0CE7B5D0-036C-48BA-84A1-F629FC4DE72E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0CE7B5D0-036C-48BA-84A1-F629FC4DE72E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0CE7B5D0-036C-48BA-84A1-F629FC4DE72E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{07124BB1-DF08-4403-B8D5-B0AE6C7BF6DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{07124BB1-DF08-4403-B8D5-B0AE6C7BF6DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{07124BB1-DF08-4403-B8D5-B0AE6C7BF6DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -100,6 +96,10 @@ Global
 		{579C2500-BCC6-4D15-8729-530916605643}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{579C2500-BCC6-4D15-8729-530916605643}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{579C2500-BCC6-4D15-8729-530916605643}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4D10EC99-AFDF-4759-87D4-6CC83283346A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D10EC99-AFDF-4759-87D4-6CC83283346A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D10EC99-AFDF-4759-87D4-6CC83283346A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4D10EC99-AFDF-4759-87D4-6CC83283346A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
