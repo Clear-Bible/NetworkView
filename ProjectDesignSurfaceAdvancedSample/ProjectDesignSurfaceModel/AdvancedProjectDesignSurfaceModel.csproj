@@ -2,8 +2,8 @@
   <PropertyGroup>
     <TargetFramework>net6.0-windows</TargetFramework>
     <OutputType>Library</OutputType>
-    <RootNamespace>NetworkModel</RootNamespace>
-    <AssemblyName>NetworkModel</AssemblyName>
+    <RootNamespace>AdvancedProjectDesignSurfaceModel</RootNamespace>
+    <AssemblyName>AdvancedProjectDesignSurfaceModel</AssemblyName>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>

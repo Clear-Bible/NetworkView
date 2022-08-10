@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Collections.ObjectModel;
-using System.Collections.Specialized;
-using ClearDashboard.Wpf.Controls.Utils;
+﻿using ClearDashboard.Wpf.Controls.Utils;
 
 
 namespace ProjectDesignSurfaceModel
@@ -12,14 +6,14 @@ namespace ProjectDesignSurfaceModel
     /// <summary>
     /// Defines a network of nodes and connections between the nodes.
     /// </summary>
-    public sealed class NetworkViewModel
+    public sealed class DesignSurfaceViewModel
     {
         #region Internal Data Members
 
         /// <summary>
         /// The collection of nodes in the network.
         /// </summary>
-        private ImpObservableCollection<NodeViewModel> _nodes;
+        private ImpObservableCollection<CorpusNodeViewModel> _nodes;
 
         /// <summary>
         /// The collection of connections in the network.
@@ -31,13 +25,13 @@ namespace ProjectDesignSurfaceModel
         /// <summary>
         /// The collection of nodes in the network.
         /// </summary>
-        public ImpObservableCollection<NodeViewModel> Nodes
+        public ImpObservableCollection<CorpusNodeViewModel> CorpusNodes
         {
             get
             {
                 if (_nodes == null)
                 {
-                    _nodes = new ImpObservableCollection<NodeViewModel>();
+                    _nodes = new ImpObservableCollection<CorpusNodeViewModel>();
                 }
 
                 return _nodes;
@@ -54,7 +48,7 @@ namespace ProjectDesignSurfaceModel
                 if (_connections == null)
                 {
                     _connections = new ImpObservableCollection<ConnectionViewModel>();
-                    _connections.ItemsRemoved += ConnectionsItemsRemoved;
+                    _connections.ItemsRemoved += OnConnectionsItemsRemoved;
                 }
 
                 return _connections;
@@ -66,12 +60,12 @@ namespace ProjectDesignSurfaceModel
         /// <summary>
         /// Event raised then Connections have been removed.
         /// </summary>
-        private void ConnectionsItemsRemoved(object sender, CollectionItemsChangedEventArgs e)
+        private void OnConnectionsItemsRemoved(object sender, CollectionItemsChangedEventArgs e)
         {
             foreach (ConnectionViewModel connection in e.Items)
             {
                 connection.SourceConnector = null;
-                connection.DestConnector = null;
+                connection.DestinationConnector = null;
             }
         }
 

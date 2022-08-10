@@ -21,7 +21,7 @@ namespace ProjectDesignSurfaceModel
         /// <summary>
         /// The destination connector the connection is attached to.
         /// </summary>
-        private ConnectorViewModel _destConnector;
+        private ConnectorViewModel _destinationConnector;
 
         /// <summary>
         /// The source and dest hotspots used for generating connection points.
@@ -52,7 +52,7 @@ namespace ProjectDesignSurfaceModel
                 if (_sourceConnector != null)
                 {
                     _sourceConnector.AttachedConnections.Remove(this);
-                    _sourceConnector.HotspotUpdated -= sourceConnector_HotspotUpdated;
+                    _sourceConnector.HotspotUpdated -= OnSourceConnectorHotspotUpdated;
                 }
 
                 _sourceConnector = value;
@@ -60,11 +60,11 @@ namespace ProjectDesignSurfaceModel
                 if (_sourceConnector != null)
                 {
                     _sourceConnector.AttachedConnections.Add(this);
-                    _sourceConnector.HotspotUpdated += sourceConnector_HotspotUpdated;
+                    _sourceConnector.HotspotUpdated += OnSourceConnectorHotspotUpdated;
                     SourceConnectorHotspot = _sourceConnector.Hotspot;
                 }
-
-                OnPropertyChanged("SourceConnector");
+              
+                NotifyOfPropertyChange(()=>SourceConnector);
                 OnConnectionChanged();
             }
         }
@@ -72,32 +72,32 @@ namespace ProjectDesignSurfaceModel
         /// <summary>
         /// The destination connector the connection is attached to.
         /// </summary>
-        public ConnectorViewModel DestConnector
+        public ConnectorViewModel DestinationConnector
         {
-            get => _destConnector;
+            get => _destinationConnector;
             set
             {
-                if (_destConnector == value)
+                if (_destinationConnector == value)
                 {
                     return;
                 }
 
-                if (_destConnector != null)
+                if (_destinationConnector != null)
                 {
-                    _destConnector.AttachedConnections.Remove(this);
-                    _destConnector.HotspotUpdated -= destConnector_HotspotUpdated;
+                    _destinationConnector.AttachedConnections.Remove(this);
+                    _destinationConnector.HotspotUpdated -= OnDestinationConnectorHotspotUpdated;
                 }
 
-                _destConnector = value;
+                _destinationConnector = value;
 
-                if (_destConnector != null)
+                if (_destinationConnector != null)
                 {
-                    _destConnector.AttachedConnections.Add(this);
-                    _destConnector.HotspotUpdated += destConnector_HotspotUpdated;
-                    DestConnectorHotspot = _destConnector.Hotspot;
+                    _destinationConnector.AttachedConnections.Add(this);
+                    _destinationConnector.HotspotUpdated += OnDestinationConnectorHotspotUpdated;
+                    DestConnectorHotspot = _destinationConnector.Hotspot;
                 }
 
-                OnPropertyChanged("DestConnector");
+                NotifyOfPropertyChange(()=>DestinationConnector);
                 OnConnectionChanged();
             }
         }
@@ -114,7 +114,7 @@ namespace ProjectDesignSurfaceModel
 
                 ComputeConnectionPoints();
 
-                OnPropertyChanged("SourceConnectorHotspot");
+                NotifyOfPropertyChange(()=>SourceConnectorHotspot);
             }
         }
 
@@ -127,7 +127,7 @@ namespace ProjectDesignSurfaceModel
 
                 ComputeConnectionPoints();
 
-                OnPropertyChanged("DestConnectorHotspot");
+                NotifyOfPropertyChange(()=>DestConnectorHotspot);
             }
         }
 
@@ -140,7 +140,7 @@ namespace ProjectDesignSurfaceModel
             set
             {
                 _points = value;
-                OnPropertyChanged("Points");
+                NotifyOfPropertyChange(()=>Points);
             }
         }
 
@@ -165,7 +165,7 @@ namespace ProjectDesignSurfaceModel
         /// <summary>
         /// Event raised when the hotspot of the source connector has been updated.
         /// </summary>
-        private void sourceConnector_HotspotUpdated(object sender, EventArgs e)
+        private void OnSourceConnectorHotspotUpdated(object sender, EventArgs e)
         {
             SourceConnectorHotspot = SourceConnector.Hotspot;
         }
@@ -173,9 +173,9 @@ namespace ProjectDesignSurfaceModel
         /// <summary>
         /// Event raised when the hotspot of the dest connector has been updated.
         /// </summary>
-        private void destConnector_HotspotUpdated(object sender, EventArgs e)
+        private void OnDestinationConnectorHotspotUpdated(object sender, EventArgs e)
         {
-            DestConnectorHotspot = DestConnector.Hotspot;
+            DestConnectorHotspot = DestinationConnector.Hotspot;
         }
 
         /// <summary>

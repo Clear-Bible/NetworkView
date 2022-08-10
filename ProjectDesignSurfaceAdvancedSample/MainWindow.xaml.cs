@@ -23,7 +23,7 @@ namespace SampleCode
         /// <summary>
         /// Event raised when the Window has loaded.
         /// </summary>
-        private void MainWindow_Loaded(object sender, RoutedEventArgs e)
+        private void OnMainWindow_Loaded(object sender, RoutedEventArgs e)
         {
             //
             // Display help text for the sample app.
@@ -49,10 +49,10 @@ namespace SampleCode
         /// <summary>
         /// Event raised when the user has started to drag out a connection.
         /// </summary>
-        private void networkControl_ConnectionDragStarted(object sender, ConnectionDragStartedEventArgs e)
+        private void OnProjectDesignSurfaceConnectionDragStarted(object sender, ConnectionDragStartedEventArgs e)
         {
             var draggedOutConnector = (ConnectorViewModel)e.ConnectorDraggedOut;
-            var curDragPoint = Mouse.GetPosition(NetworkControl);
+            var curDragPoint = Mouse.GetPosition(ProjectDesignSurface);
 
             //
             // Delegate the real work to the view model.
@@ -69,7 +69,7 @@ namespace SampleCode
         /// <summary>
         /// Event raised, to query for feedback, while the user is dragging a connection.
         /// </summary>
-        private void networkControl_QueryConnectionFeedback(object sender, QueryConnectionFeedbackEventArgs e)
+        private void OnProjectDesignSurfaceQueryConnectionFeedback(object sender, QueryConnectionFeedbackEventArgs e)
         {
             var draggedOutConnector = (ConnectorViewModel)e.ConnectorDraggedOut;
             var draggedOverConnector= (ConnectorViewModel)e.DraggedOverConnector;
@@ -92,9 +92,9 @@ namespace SampleCode
         /// <summary>
         /// Event raised while the user is dragging a connection.
         /// </summary>
-        private void networkControl_ConnectionDragging(object sender, ConnectionDraggingEventArgs e)
+        private void OnProjectDesignSurfaceConnectionDragging(object sender, ConnectionDraggingEventArgs e)
         {
-            Point curDragPoint = Mouse.GetPosition(NetworkControl);
+            Point curDragPoint = Mouse.GetPosition(ProjectDesignSurface);
             var connection = (ConnectionViewModel)e.Connection;
             this.ViewModel.ConnectionDragging(curDragPoint, connection);
         }
@@ -102,7 +102,7 @@ namespace SampleCode
         /// <summary>
         /// Event raised when the user has finished dragging out a connection.
         /// </summary>
-        private void networkControl_ConnectionDragCompleted(object sender, ConnectionDragCompletedEventArgs e)
+        private void OnProjectDesignSurfaceConnectionDragCompleted(object sender, ConnectionDragCompletedEventArgs e)
         {
             var connectorDraggedOut = (ConnectorViewModel)e.ConnectorDraggedOut;
             var connectorDraggedOver = (ConnectorViewModel)e.ConnectorDraggedOver;
@@ -113,7 +113,7 @@ namespace SampleCode
         /// <summary>
         /// Event raised to delete the selected node.
         /// </summary>
-        private void DeleteSelectedNodes_Executed(object sender, ExecutedRoutedEventArgs e)
+        private void OnDeleteSelectedNodesExecuted(object sender, ExecutedRoutedEventArgs e)
         {
             this.ViewModel.DeleteSelectedNodes();
         }
@@ -121,7 +121,7 @@ namespace SampleCode
         /// <summary>
         /// Event raised to create a new node.
         /// </summary>
-        private void CreateNode_Executed(object sender, ExecutedRoutedEventArgs e)
+        private void OnCreateCorpusNodeExecuted(object sender, ExecutedRoutedEventArgs e)
         {
             CreateNode();
         }
@@ -129,16 +129,16 @@ namespace SampleCode
         /// <summary>
         /// Event raised to delete a node.
         /// </summary>
-        private void DeleteNode_Executed(object sender, ExecutedRoutedEventArgs e)
+        private void OnDeleteCorpusNodeExecuted(object sender, ExecutedRoutedEventArgs e)
         {
-            var node = (NodeViewModel)e.Parameter;
+            var node = (CorpusNodeViewModel)e.Parameter;
             this.ViewModel.DeleteNode(node);
         }
 
         /// <summary>
         /// Event raised to delete a connection.
         /// </summary>
-        private void DeleteConnection_Executed(object sender, ExecutedRoutedEventArgs e)
+        private void OnDeleteConnectionExecuted(object sender, ExecutedRoutedEventArgs e)
         {
             var connection = (ConnectionViewModel)e.Parameter;
             this.ViewModel.DeleteConnection(connection);
@@ -149,21 +149,21 @@ namespace SampleCode
         /// </summary>
         private void CreateNode()
         {
-            var newNodePosition = Mouse.GetPosition(NetworkControl);
-            this.ViewModel.CreateNode("New Node!", newNodePosition, true);
+            var newNodePosition = Mouse.GetPosition(ProjectDesignSurface);
+            this.ViewModel.CreateNode("New Corpus!", newNodePosition, true);
         }
 
         /// <summary>
         /// Event raised when the size of a node has changed.
         /// </summary>
-        private void Node_SizeChanged(object sender, SizeChangedEventArgs e)
+        private void OnCorpusNodeSizeChanged(object sender, SizeChangedEventArgs e)
         {
             //
             // The size of a node, as determined in the UI by the node's data-template,
             // has changed.  Push the size of the node through to the view-model.
             //
             var element = (FrameworkElement)sender;
-            var node = (NodeViewModel)element.DataContext;
+            var node = (CorpusNodeViewModel)element.DataContext;
             node.Size = new Size(element.ActualWidth, element.ActualHeight);
         }
     }

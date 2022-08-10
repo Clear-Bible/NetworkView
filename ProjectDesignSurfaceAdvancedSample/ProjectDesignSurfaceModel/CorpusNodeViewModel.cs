@@ -7,9 +7,9 @@ namespace ProjectDesignSurfaceModel
 {
     /// <summary>
     /// Defines a node in the view-model.
-    /// Nodes are connected to other nodes through attached connectors (aka anchor/connection points).
+    /// CorpusNodes are connected to other nodes through attached connectors (aka anchor/connection points).
     /// </summary>
-    public sealed class NodeViewModel : AbstractModelBase
+    public sealed class CorpusNodeViewModel : AbstractModelBase
     {
         #region Private Data Members
 
@@ -61,11 +61,11 @@ namespace ProjectDesignSurfaceModel
 
         #endregion Private Data Members
 
-        public NodeViewModel()
+        public CorpusNodeViewModel()
         {
         }
 
-        public NodeViewModel(string name)
+        public CorpusNodeViewModel(string name)
         {
             _name = name;
         }
@@ -76,17 +76,7 @@ namespace ProjectDesignSurfaceModel
         public string Name
         {
             get => _name;
-            set
-            {
-                if (_name == value)
-                {
-                    return;
-                }
-
-                _name = value;
-
-                OnPropertyChanged("Name");
-            }
+            set => Set(ref _name, value);
         }
 
         /// <summary>
@@ -95,17 +85,7 @@ namespace ProjectDesignSurfaceModel
         public double X
         {
             get => _x;
-            set
-            {
-                if (_x == value)
-                {
-                    return;
-                }
-
-                _x = value;
-
-                OnPropertyChanged("X");
-            }
+            set => Set(ref _x, value);
         }
 
         /// <summary>
@@ -114,17 +94,7 @@ namespace ProjectDesignSurfaceModel
         public double Y
         {
             get => _y;
-            set
-            {
-                if (_y == value)
-                {
-                    return;
-                }
-
-                _y = value;
-
-                OnPropertyChanged("Y");
-            }
+            set => Set(ref _y, value);
         }
 
         /// <summary>
@@ -133,17 +103,7 @@ namespace ProjectDesignSurfaceModel
         public int ZIndex
         {
             get => _zIndex;
-            set
-            {
-                if (_zIndex == value)
-                {
-                    return;
-                }
-
-                _zIndex = value;
-
-                OnPropertyChanged("ZIndex");
-            }
+            set => Set(ref _zIndex, value);
         }
 
         /// <summary>
@@ -160,12 +120,7 @@ namespace ProjectDesignSurfaceModel
             get => _size;
             set
             {
-                if (_size == value)
-                {
-                    return;
-                }
-
-                _size = value;
+                Set(ref _size, value);
 
                 if (SizeChanged != null)
                 {
@@ -192,8 +147,8 @@ namespace ProjectDesignSurfaceModel
                 if (_inputConnectors == null)
                 {
                     _inputConnectors = new ImpObservableCollection<ConnectorViewModel>();
-                    _inputConnectors.ItemsAdded += inputConnectors_ItemsAdded;
-                    _inputConnectors.ItemsRemoved += InputConnectorsItemsRemoved;
+                    _inputConnectors.ItemsAdded += OnInputConnectorsItemsAdded;
+                    _inputConnectors.ItemsRemoved += OnInputConnectorsItemsRemoved;
                 }
 
                 return _inputConnectors;
@@ -210,8 +165,8 @@ namespace ProjectDesignSurfaceModel
                 if (_outputConnectors == null)
                 {
                     _outputConnectors = new ImpObservableCollection<ConnectorViewModel>();
-                    _outputConnectors.ItemsAdded += outputConnectors_ItemsAdded;
-                    _outputConnectors.ItemsRemoved += outputConnectors_ItemsRemoved;
+                    _outputConnectors.ItemsAdded += OnOutputConnectorsItemsAdded;
+                    _outputConnectors.ItemsRemoved += OnOutputConnectorsItemsRemoved;
                 }
 
                 return _outputConnectors;
@@ -249,14 +204,7 @@ namespace ProjectDesignSurfaceModel
             get => _isSelected;
             set
             {
-                if (_isSelected == value)
-                {
-                    return;
-                }
-
-                _isSelected = value;
-
-                OnPropertyChanged("IsSelected");
+                Set(ref _isSelected, value);
             }
         }
 
@@ -265,7 +213,7 @@ namespace ProjectDesignSurfaceModel
         /// <summary>
         /// Event raised when connectors are added to the node.
         /// </summary>
-        private void inputConnectors_ItemsAdded(object sender, CollectionItemsChangedEventArgs e)
+        private void OnInputConnectorsItemsAdded(object sender, CollectionItemsChangedEventArgs e)
         {
             foreach (ConnectorViewModel connector in e.Items)
             {
@@ -277,7 +225,7 @@ namespace ProjectDesignSurfaceModel
         /// <summary>
         /// Event raised when connectors are removed from the node.
         /// </summary>
-        private void InputConnectorsItemsRemoved(object sender, CollectionItemsChangedEventArgs e)
+        private void OnInputConnectorsItemsRemoved(object sender, CollectionItemsChangedEventArgs e)
         {
             foreach (ConnectorViewModel connector in e.Items)
             {
@@ -289,7 +237,7 @@ namespace ProjectDesignSurfaceModel
         /// <summary>
         /// Event raised when connectors are added to the node.
         /// </summary>
-        private void outputConnectors_ItemsAdded(object sender, CollectionItemsChangedEventArgs e)
+        private void OnOutputConnectorsItemsAdded(object sender, CollectionItemsChangedEventArgs e)
         {
             foreach (ConnectorViewModel connector in e.Items)
             {
@@ -301,7 +249,7 @@ namespace ProjectDesignSurfaceModel
         /// <summary>
         /// Event raised when connectors are removed from the node.
         /// </summary>
-        private void outputConnectors_ItemsRemoved(object sender, CollectionItemsChangedEventArgs e)
+        private void OnOutputConnectorsItemsRemoved(object sender, CollectionItemsChangedEventArgs e)
         {
             foreach (ConnectorViewModel connector in e.Items)
             {

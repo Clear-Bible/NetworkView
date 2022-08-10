@@ -18,7 +18,7 @@ namespace SampleCode
         /// This is the network that is displayed in the window.
         /// It is the main part of the view-model.
         /// </summary>
-        private NetworkViewModel _network;
+        private DesignSurfaceViewModel _designSurface;
 
         ///
         /// The current scale at which the content is being viewed.
@@ -71,14 +71,10 @@ namespace SampleCode
         /// This is the network that is displayed in the window.
         /// It is the main part of the view-model.
         /// </summary>
-        public NetworkViewModel Network
+        public DesignSurfaceViewModel DesignSurface
         {
-            get => _network;
-            set
-            {
-                _network = value;
-                OnPropertyChanged("Network");
-            }
+            get => _designSurface;
+            set => Set(ref _designSurface, value);
         }
 
         ///
@@ -87,11 +83,7 @@ namespace SampleCode
         public double ContentScale
         {
             get => _contentScale;
-            set
-            {
-                _contentScale = value;
-                OnPropertyChanged("ContentScale");
-            }
+            set => Set(ref _contentScale, value);
         }
 
         ///
@@ -100,11 +92,7 @@ namespace SampleCode
         public double ContentOffsetX
         {
             get => _contentOffsetX;
-            set
-            {
-                _contentOffsetX = value;
-                OnPropertyChanged("ContentOffsetX");
-            }
+            set => Set(ref _contentOffsetX, value);
         }
 
         ///
@@ -113,11 +101,7 @@ namespace SampleCode
         public double ContentOffsetY
         {
             get => _contentOffsetY;
-            set
-            {
-                _contentOffsetY = value;
-                OnPropertyChanged("ContentOffsetY");
-            }
+            set => Set(ref _contentOffsetY, value);
         }
 
         ///
@@ -126,11 +110,7 @@ namespace SampleCode
         public double ContentWidth
         {
             get => _contentWidth;
-            set
-            {
-                _contentWidth = value;
-                OnPropertyChanged("ContentWidth");
-            }
+            set => Set(ref _contentWidth, value);
         }
 
         ///
@@ -139,11 +119,7 @@ namespace SampleCode
         public double ContentHeight
         {
             get => _contentHeight;
-            set
-            {
-                _contentHeight = value;
-                OnPropertyChanged("ContentHeight");
-            }
+            set => Set(ref _contentHeight, value);
         }
 
         ///
@@ -154,11 +130,7 @@ namespace SampleCode
         public double ContentViewportWidth
         {
             get => _contentViewportWidth;
-            set
-            {
-                _contentViewportWidth = value;
-                OnPropertyChanged("ContentViewportWidth");
-            }
+            set => Set(ref _contentViewportWidth, value);
         }
 
         ///
@@ -169,11 +141,7 @@ namespace SampleCode
         public double ContentViewportHeight
         {
             get => _contentViewportHeight;
-            set
-            {
-                _contentViewportHeight = value;
-                OnPropertyChanged("ContentViewportHeight");
-            }
+            set => Set(ref _contentViewportHeight, value);
         }
 
         /// <summary>
@@ -199,14 +167,14 @@ namespace SampleCode
                 //
                 // The user is dragging out a destination connector (an input) and will connect it to a source connector (an output).
                 //
-                connection.DestConnector = draggedOutConnector;
+                connection.DestinationConnector = draggedOutConnector;
                 connection.SourceConnectorHotspot = curDragPoint;
             }
 
             //
             // Add the new connection to the view-model.
             //
-            Network.Connections.Add(connection);
+            DesignSurface.Connections.Add(connection);
 
             return connection;
         }
@@ -264,7 +232,7 @@ namespace SampleCode
         /// </summary>
         public void ConnectionDragging(Point curDragPoint, ConnectionViewModel connection)
         {
-            if (connection.DestConnector == null)
+            if (connection.DestinationConnector == null)
             {
                 connection.DestConnectorHotspot = curDragPoint;
             }
@@ -285,7 +253,7 @@ namespace SampleCode
                 // The connection was unsuccessful.
                 // Maybe the user dragged it out and dropped it in empty space.
                 //
-                this.Network.Connections.Remove(newConnection);
+                this.DesignSurface.Connections.Remove(newConnection);
                 return;
             }
 
@@ -304,7 +272,7 @@ namespace SampleCode
                 // eg input -> input or output -> output, are not allowed,
                 // Remove the connection.
                 //
-                Network.Connections.Remove(newConnection);
+                DesignSurface.Connections.Remove(newConnection);
                 return;
             }
 
@@ -318,16 +286,16 @@ namespace SampleCode
             var existingConnection = FindConnection(connectorDraggedOut, connectorDraggedOver);
             if (existingConnection != null)
             {
-                Network.Connections.Remove(existingConnection);
+                DesignSurface.Connections.Remove(existingConnection);
             }
 
             //
             // Finalize the connection by attaching it to the connector
             // that the user dragged the mouse over.
             //
-            if (newConnection.DestConnector == null)
+            if (newConnection.DestinationConnector == null)
             {
-                newConnection.DestConnector = connectorDraggedOver;
+                newConnection.DestinationConnector = connectorDraggedOver;
             }
             else
             {
@@ -357,7 +325,7 @@ namespace SampleCode
 
             foreach (var connection in sourceConnector.AttachedConnections)
             {
-                if (connection.DestConnector == destConnector)
+                if (connection.DestinationConnector == destConnector)
                 {
                     //
                     // Found a connection that is outgoing from the source connector
@@ -376,7 +344,7 @@ namespace SampleCode
         public void DeleteSelectedNodes()
         {
             // Take a copy of the selected nodes list so we can delete nodes while iterating.
-            var nodesCopy = this.Network.Nodes.ToArray();
+            var nodesCopy = this.DesignSurface.CorpusNodes.ToArray();
             foreach (var node in nodesCopy)
             {
                 if (node.IsSelected)
@@ -390,34 +358,34 @@ namespace SampleCode
         /// Delete the node from the view-model.
         /// Also deletes any connections to or from the node.
         /// </summary>
-        public void DeleteNode(NodeViewModel node)
+        public void DeleteNode(CorpusNodeViewModel node)
         {
             //
             // Remove all connections attached to the node.
             //
-            Network.Connections.RemoveRange(node.AttachedConnections);
+            DesignSurface.Connections.RemoveRange(node.AttachedConnections);
 
             //
             // Remove the node from the network.
             //
-            Network.Nodes.Remove(node);
+            DesignSurface.CorpusNodes.Remove(node);
         }
 
         /// <summary>
         /// Create a node and add it to the view-model.
         /// </summary>
-        public NodeViewModel CreateNode(string name, Point nodeLocation, bool centerNode)
+        public CorpusNodeViewModel CreateNode(string name, Point nodeLocation, bool centerNode)
         {
-            var node = new NodeViewModel(name)
+            var node = new CorpusNodeViewModel(name)
             {
                 X = nodeLocation.X,
                 Y = nodeLocation.Y
             };
 
-            node.InputConnectors.Add(new ConnectorViewModel("In1"));
-            node.InputConnectors.Add(new ConnectorViewModel("In2"));
-            node.OutputConnectors.Add(new ConnectorViewModel("Out1"));
-            node.OutputConnectors.Add(new ConnectorViewModel("Out2"));
+            node.InputConnectors.Add(new ConnectorViewModel("Target"));
+            //node.InputConnectors.Add(new ConnectorViewModel("In2"));
+            node.OutputConnectors.Add(new ConnectorViewModel("Source"));
+            //node.OutputConnectors.Add(new ConnectorViewModel("Out2"));
 
             if (centerNode)
             {
@@ -458,7 +426,7 @@ namespace SampleCode
             //
             // Add the node to the view-model.
             //
-            Network.Nodes.Add(node);
+            DesignSurface.CorpusNodes.Add(node);
 
             return node;
         }
@@ -468,7 +436,7 @@ namespace SampleCode
         /// </summary>
         public void DeleteConnection(ConnectionViewModel connection)
         {
-            Network.Connections.Remove(connection);
+            DesignSurface.Connections.Remove(connection);
         }
 
 
@@ -482,7 +450,7 @@ namespace SampleCode
             //
             // Create a network, the root of the view-model.
             //
-            Network = new NetworkViewModel();
+            DesignSurface = new DesignSurfaceViewModel();
 
             //
             // Create some nodes and add them to the view-model.
@@ -496,13 +464,13 @@ namespace SampleCode
             var connection = new ConnectionViewModel
             {
                 SourceConnector = node1.OutputConnectors[0],
-                DestConnector = node2.InputConnectors[0]
+                DestinationConnector = node2.InputConnectors[0]
             };
 
             //
             // Add the connection to the view-model.
             //
-            Network.Connections.Add(connection);
+            DesignSurface.Connections.Add(connection);
         }
 
         #endregion Private Methods

@@ -56,7 +56,7 @@ namespace ProjectDesignSurfaceModel
         {
             get
             {
-                return AttachedConnections.Any(connection => connection.SourceConnector != null && connection.DestConnector != null);
+                return AttachedConnections.Any(connection => connection.SourceConnector != null && connection.DestinationConnector != null);
             }
         }
 
@@ -76,8 +76,8 @@ namespace ProjectDesignSurfaceModel
                 if (_attachedConnections == null)
                 {
                     _attachedConnections = new ImpObservableCollection<ConnectionViewModel>();
-                    _attachedConnections.ItemsAdded += new EventHandler<CollectionItemsChangedEventArgs>(attachedConnections_ItemsAdded);
-                    _attachedConnections.ItemsRemoved += new EventHandler<CollectionItemsChangedEventArgs>(attachedConnections_ItemsRemoved);
+                    _attachedConnections.ItemsAdded += new EventHandler<CollectionItemsChangedEventArgs>(OnAttachedConnectionsItemsAdded);
+                    _attachedConnections.ItemsRemoved += new EventHandler<CollectionItemsChangedEventArgs>(OnAttachedConnectionsItemsRemoved);
                 }
 
                 return _attachedConnections;
@@ -87,7 +87,7 @@ namespace ProjectDesignSurfaceModel
         /// <summary>
         /// The parent node that the connector is attached to, or null if the connector is not attached to any node.
         /// </summary>
-        public NodeViewModel ParentNode
+        public CorpusNodeViewModel ParentNode
         {
             get;
             internal set;
@@ -123,11 +123,11 @@ namespace ProjectDesignSurfaceModel
         /// <summary>
         /// Debug checking to ensure that no connection is added to the list twice.
         /// </summary>
-        private void attachedConnections_ItemsAdded(object sender, CollectionItemsChangedEventArgs e)
+        private void OnAttachedConnectionsItemsAdded(object sender, CollectionItemsChangedEventArgs e)
         {
             foreach (ConnectionViewModel connection in e.Items)
             {
-                connection.ConnectionChanged += new EventHandler<EventArgs>(connection_ConnectionChanged);
+                connection.ConnectionChanged += new EventHandler<EventArgs>(OnConnectionChanged);
             }
 
             if ((AttachedConnections.Count - e.Items.Count) == 0)
@@ -136,19 +136,19 @@ namespace ProjectDesignSurfaceModel
                 // The first connection has been added, notify the data-binding system that
                 // 'IsConnected' should be re-evaluated.
                 //
-                OnPropertyChanged("IsConnectionAttached");
-                OnPropertyChanged("IsConnected");
+                NotifyOfPropertyChange(()=>IsConnectionAttached);
+                NotifyOfPropertyChange(()=>IsConnected);
             }
         }
 
         /// <summary>
         /// Event raised when connections have been removed from the connector.
         /// </summary>
-        private void attachedConnections_ItemsRemoved(object sender, CollectionItemsChangedEventArgs e)
+        private void OnAttachedConnectionsItemsRemoved(object sender, CollectionItemsChangedEventArgs e)
         {
             foreach (ConnectionViewModel connection in e.Items)
             {
-                connection.ConnectionChanged -= new EventHandler<EventArgs>(connection_ConnectionChanged);
+                connection.ConnectionChanged -= new EventHandler<EventArgs>(OnConnectionChanged);
             }
 
             if (AttachedConnections.Count == 0)
@@ -157,18 +157,18 @@ namespace ProjectDesignSurfaceModel
                 // No longer connected to anything, notify the data-binding system that
                 // 'IsConnected' should be re-evaluated.
                 //
-                OnPropertyChanged("IsConnectionAttached");
-                OnPropertyChanged("IsConnected");
+                NotifyOfPropertyChange(()=>IsConnectionAttached);
+                NotifyOfPropertyChange(()=>IsConnected);
             }
         }
 
         /// <summary>
         /// Event raised when a connection attached to the connector has changed.
         /// </summary>
-        private void connection_ConnectionChanged(object sender, EventArgs e)
+        private void OnConnectionChanged(object sender, EventArgs e)
         {
-            OnPropertyChanged("IsConnectionAttached");
-            OnPropertyChanged("IsConnected");
+            NotifyOfPropertyChange(()=>IsConnectionAttached);
+            NotifyOfPropertyChange(()=>IsConnected);
         }
 
         /// <summary>
@@ -176,7 +176,7 @@ namespace ProjectDesignSurfaceModel
         /// </summary>
         private void OnHotspotUpdated()
         {
-            OnPropertyChanged("Hotspot");
+            NotifyOfPropertyChange(()=>Hotspot);
 
             if (HotspotUpdated != null)
             {

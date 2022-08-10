@@ -52,14 +52,14 @@ namespace SampleCode
         /// <summary>
         /// Event raised on mouse down in the NetworkView.
         /// </summary> 
-        private void networkControl_MouseDown(object sender, MouseButtonEventArgs e)
+        private void OnDesignSurfaceMouseDown(object sender, MouseButtonEventArgs e)
         {
-            NetworkControl.Focus();
-            Keyboard.Focus(NetworkControl);
+            ProjectDesignSurface.Focus();
+            Keyboard.Focus(ProjectDesignSurface);
 
             _mouseButtonDown = e.ChangedButton;
             _origZoomAndPanControlMouseDownPoint = e.GetPosition(zoomAndPanControl);
-            _origContentMouseDownPoint = e.GetPosition(NetworkControl);
+            _origContentMouseDownPoint = e.GetPosition(ProjectDesignSurface);
 
             if ((Keyboard.Modifiers & ModifierKeys.Shift) != 0 &&
                 (e.ChangedButton == MouseButton.Left ||
@@ -82,7 +82,7 @@ namespace SampleCode
             if (_mouseHandlingMode != MouseHandlingMode.None)
             {
                 // Capture the mouse so that we eventually receive the mouse up event.
-                NetworkControl.CaptureMouse();
+                ProjectDesignSurface.CaptureMouse();
                 e.Handled = true;
             }
         }
@@ -90,7 +90,7 @@ namespace SampleCode
         /// <summary>
         /// Event raised on mouse up in the NetworkView.
         /// </summary>
-        private void networkControl_MouseUp(object sender, MouseButtonEventArgs e)
+        private void OnDesignSurfaceMouseUp(object sender, MouseButtonEventArgs e)
         {
             if (_mouseHandlingMode != MouseHandlingMode.None)
             {
@@ -126,7 +126,7 @@ namespace SampleCode
                 // Reenable clearing of selection when empty space is clicked.
                 // This is disabled when drag panning is in progress.
                 //
-                NetworkControl.IsClearSelectionOnEmptySpaceClickEnabled = true;
+                ProjectDesignSurface.IsClearSelectionOnEmptySpaceClickEnabled = true;
 
                 //
                 // Reset the override cursor.
@@ -134,7 +134,7 @@ namespace SampleCode
                 //
                 Mouse.OverrideCursor = null;
 
-                NetworkControl.ReleaseMouseCapture();
+                ProjectDesignSurface.ReleaseMouseCapture();
                 _mouseHandlingMode = MouseHandlingMode.None;
                 e.Handled = true;
             }
@@ -158,7 +158,7 @@ namespace SampleCode
                     // drag panning.
                     //
                     _mouseHandlingMode = MouseHandlingMode.DragPanning;
-                    NetworkControl.IsClearSelectionOnEmptySpaceClickEnabled = false;
+                    ProjectDesignSurface.IsClearSelectionOnEmptySpaceClickEnabled = false;
                     Mouse.OverrideCursor = Cursors.ScrollAll;
                 }
 
@@ -170,7 +170,7 @@ namespace SampleCode
                 // The user is left-dragging the mouse.
                 // Pan the viewport by the appropriate amount.
                 //
-                var curContentMousePoint = e.GetPosition(NetworkControl);
+                var curContentMousePoint = e.GetPosition(ProjectDesignSurface);
                 var dragOffset = curContentMousePoint - _origContentMouseDownPoint;
 
                 zoomAndPanControl.ContentOffsetX -= dragOffset.X;
@@ -193,7 +193,7 @@ namespace SampleCode
                     // to zoom in on.
                     //
                     _mouseHandlingMode = MouseHandlingMode.DragZooming;
-                    var curContentMousePoint = e.GetPosition(NetworkControl);
+                    var curContentMousePoint = e.GetPosition(ProjectDesignSurface);
                     InitDragZoomRect(_origContentMouseDownPoint, curContentMousePoint);
                 }
 
@@ -205,7 +205,7 @@ namespace SampleCode
                 // When in drag zooming mode continuously update the position of the rectangle
                 // that the user is dragging out.
                 //
-                var curContentMousePoint = e.GetPosition(NetworkControl);
+                var curContentMousePoint = e.GetPosition(ProjectDesignSurface);
                 SetDragZoomRect(_origContentMouseDownPoint, curContentMousePoint);
 
                 e.Handled = true;
@@ -221,12 +221,12 @@ namespace SampleCode
 
             if (e.Delta > 0)
             {
-                var curContentMousePoint = e.GetPosition(NetworkControl);
+                var curContentMousePoint = e.GetPosition(ProjectDesignSurface);
                 ZoomIn(curContentMousePoint);
             }
             else if (e.Delta < 0)
             {
-                var curContentMousePoint = e.GetPosition(NetworkControl);
+                var curContentMousePoint = e.GetPosition(ProjectDesignSurface);
                 ZoomOut(curContentMousePoint);
             }
         }
@@ -238,7 +238,7 @@ namespace SampleCode
         {
             if ((Keyboard.Modifiers & ModifierKeys.Shift) == 0)
             {
-                var doubleClickPoint = e.GetPosition(NetworkControl);
+                var doubleClickPoint = e.GetPosition(ProjectDesignSurface);
                 zoomAndPanControl.AnimatedSnapTo(doubleClickPoint);
             }
         }
@@ -248,7 +248,7 @@ namespace SampleCode
         /// </summary>
         private void ZoomIn_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            var o = NetworkControl.SelectedNode;
+            var o = ProjectDesignSurface.SelectedNode;
 
             ZoomIn(new Point(zoomAndPanControl.ContentZoomFocusX, zoomAndPanControl.ContentZoomFocusY));
         }
@@ -284,13 +284,13 @@ namespace SampleCode
         {
             IList nodes;
 
-            if (NetworkControl.SelectedNodes.Count > 0)
+            if (ProjectDesignSurface.SelectedNodes.Count > 0)
             {
-                nodes = NetworkControl.SelectedNodes;
+                nodes = ProjectDesignSurface.SelectedNodes;
             }
             else
             {
-                nodes = this.ViewModel.Network.Nodes;
+                nodes = this.ViewModel.DesignSurface.CorpusNodes;
                 if (nodes.Count == 0)
                 {
                     return;
@@ -305,7 +305,7 @@ namespace SampleCode
             // Inflate the content rect by a fraction of the actual size of the total content area.
             // This puts a nice border around the content we are fitting to the viewport.
             //
-            actualContentRect.Inflate(NetworkControl.ActualWidth / 40, NetworkControl.ActualHeight / 40);
+            actualContentRect.Inflate(ProjectDesignSurface.ActualWidth / 40, ProjectDesignSurface.ActualHeight / 40);
 
             zoomAndPanControl.AnimatedZoomTo(actualContentRect);
         }
@@ -315,12 +315,12 @@ namespace SampleCode
         /// </summary>
         private Rect DetermineAreaOfNodes(IList nodes)
         {
-            var firstNode = (NodeViewModel)nodes[0];
+            var firstNode = (CorpusNodeViewModel)nodes[0];
             var actualContentRect = new Rect(firstNode.X, firstNode.Y, firstNode.Size.Width, firstNode.Size.Height);
 
             for (var i = 1; i < nodes.Count; ++i)
             {
-                var node = (NodeViewModel)nodes[i];
+                var node = (CorpusNodeViewModel)nodes[i];
                 var nodeRect = new Rect(node.X, node.Y, node.Size.Width, node.Size.Height);
                 actualContentRect = Rect.Union(actualContentRect, nodeRect);
             }
@@ -377,8 +377,8 @@ namespace SampleCode
         {
             SetDragZoomRect(pt1, pt2);
 
-            dragZoomCanvas.Visibility = Visibility.Visible;
-            dragZoomBorder.Opacity = 0.5;
+            DragZoomCanvas.Visibility = Visibility.Visible;
+            DragZoomBorder.Opacity = 0.5;
         }
 
         /// <summary>
@@ -418,10 +418,10 @@ namespace SampleCode
             // Update the coordinates of the rectangle that is being dragged out by the user.
             // The we offset and rescale to convert from content coordinates.
             //
-            Canvas.SetLeft(dragZoomBorder, x);
-            Canvas.SetTop(dragZoomBorder, y);
-            dragZoomBorder.Width = width;
-            dragZoomBorder.Height = height;
+            Canvas.SetLeft(DragZoomBorder, x);
+            Canvas.SetTop(DragZoomBorder, y);
+            DragZoomBorder.Width = width;
+            DragZoomBorder.Height = height;
         }
 
         /// <summary>
@@ -437,10 +437,10 @@ namespace SampleCode
             //
             // Retrieve the rectangle that the user dragged out and zoom in on it.
             //
-            var contentX = Canvas.GetLeft(dragZoomBorder);
-            var contentY = Canvas.GetTop(dragZoomBorder);
-            var contentWidth = dragZoomBorder.Width;
-            var contentHeight = dragZoomBorder.Height;
+            var contentX = Canvas.GetLeft(DragZoomBorder);
+            var contentY = Canvas.GetTop(DragZoomBorder);
+            var contentWidth = DragZoomBorder.Width;
+            var contentHeight = DragZoomBorder.Height;
             zoomAndPanControl.AnimatedZoomTo(new Rect(contentX, contentY, contentWidth, contentHeight));
 
             FadeOutDragZoomRect();
@@ -451,10 +451,10 @@ namespace SampleCode
         //
         private void FadeOutDragZoomRect()
         {
-            AnimationHelper.StartAnimation(dragZoomBorder, Border.OpacityProperty, 0.0, 0.1,
+            AnimationHelper.StartAnimation(DragZoomBorder, Border.OpacityProperty, 0.0, 0.1,
                 delegate(object sender, EventArgs e)
                 {
-                    dragZoomCanvas.Visibility = Visibility.Collapsed;
+                    DragZoomCanvas.Visibility = Visibility.Collapsed;
                 });
         }
 
