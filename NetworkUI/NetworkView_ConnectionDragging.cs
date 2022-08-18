@@ -197,20 +197,62 @@ namespace NetworkUI
             connectorItemDraggedOver = null;
             connectorDataContextDraggedOver = null;
 
+            ////
+            //// Run a hit test 
+            ////
+            //HitTestResult result = null;
+            //VisualTreeHelper.HitTest(_nodeItemsControl, null, 
+            //    //
+            //    // Result callback delegate.
+            //    // This method is called when we have a result.
+            //    //
+            //    delegate(HitTestResult hitTestResult)
+            //    {
+            //        result = hitTestResult;
+
+            //        return HitTestResultBehavior.Stop;
+            //    },
+            //    new PointHitTestParameters(hitPoint));
+
             //
-            // Run a hit test 
+            // Run a hit test
             //
             HitTestResult result = null;
-            VisualTreeHelper.HitTest(_nodeItemsControl, null, 
-                //
-                // Result callback delegate.
-                // This method is called when we have a result.
-                //
-                delegate(HitTestResult hitTestResult)
+            VisualTreeHelper.HitTest(_nodeItemsControl, null,
+                // Result callback delegate. This method is called when we have a result.
+                delegate (HitTestResult hitTestResult)
                 {
+                    // An annoying but probably useful quirk of the visual tree helper is that it
+                    // doesn't check if a control is hit test visible, we do this test explicitly
+                    // here.
+                    bool isVisible = false;
+                    bool isHitTestVisible = false;
+
                     result = hitTestResult;
 
-                    return HitTestResultBehavior.Stop;
+                    var uiElement = hitTestResult.VisualHit as UIElement;
+                    if (uiElement != null)
+                    {
+                        isVisible = uiElement.IsVisible;
+                        if (isVisible)
+                            isHitTestVisible = uiElement.IsHitTestVisible;
+                    }
+                    else
+                    {
+                        UIElement3D uiElement3D = hitTestResult.VisualHit as UIElement3D;
+                        if (uiElement3D != null)
+                        {
+                            isVisible = uiElement3D.IsVisible;
+                            if (isVisible)
+                                isHitTestVisible = uiElement3D.IsHitTestVisible;
+                        }
+                    }
+
+                    if (isVisible && isHitTestVisible)
+                    {
+                        return HitTestResultBehavior.Stop;
+                    }
+                    return HitTestResultBehavior.Continue;
                 },
                 new PointHitTestParameters(hitPoint));
 
