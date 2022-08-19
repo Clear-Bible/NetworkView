@@ -8,10 +8,18 @@
     <!--  The border brush for nodes.  -->
     <SolidColorBrush x:Key="nodeBorderBrush" Color="Black" />
 
-    <!--  The fill brush for nodes.  -->
-    <LinearGradientBrush x:Key="nodeFillBrush" StartPoint="0,0" EndPoint="0,1">
+    <!--  The fill brushes for nodes.  -->
+    <LinearGradientBrush x:Key="nodeFillBrushStandardProject" StartPoint="0,0" EndPoint="0,1">
         <GradientStop Offset="0" Color="White" />
         <GradientStop Offset="0.6" Color="#7FC9FF" />
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="nodeFillBrushBacktranslationProject" StartPoint="0,0" EndPoint="0,1">
+        <GradientStop Offset="0" Color="White" />
+        <GradientStop Offset="0.6" Color="Orange" />
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="nodeFillBrushReferenceProject" StartPoint="0,0" EndPoint="0,1">
+        <GradientStop Offset="0" Color="White" />
+        <GradientStop Offset="0.6" Color="PaleGoldenrod" />
     </LinearGradientBrush>
 
     <!--  The brush for connections.  -->

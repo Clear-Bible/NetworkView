@@ -113,6 +113,24 @@ namespace ProjectDesignSurfaceModel
             }
         }
 
+
+        /// <summary>
+        /// Set to 'true' when the node is selected.
+        /// </summary>
+        private bool _isSelected = false;
+        /// <summary>
+        /// Set to 'true' when the node is selected.
+        /// </summary>
+        public bool IsSelected
+        {
+            get => _isSelected;
+            set
+            {
+                Set(ref _isSelected, value);
+            }
+        }
+
+
         /// <summary>
         /// Event raised when the connector hotspot has been updated.
         /// </summary>

@@ -65,7 +65,7 @@
                     <!--  This rectangle is the main visual for the node.  -->
 
                     <Rectangle
-                        Fill="{StaticResource nodeFillBrush}"
+                        Fill="{StaticResource nodeFillBrushStandardProject}"
                         RadiusX="4"
                         RadiusY="4"
                         Stroke="{StaticResource nodeBorderBrush}"

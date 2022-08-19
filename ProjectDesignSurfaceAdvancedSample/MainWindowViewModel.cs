@@ -374,13 +374,16 @@ namespace SampleCode
         /// <summary>
         /// Create a node and add it to the view-model.
         /// </summary>
-        public CorpusNodeViewModel CreateNode(string name, Point nodeLocation, bool centerNode)
+        public CorpusNodeViewModel CreateNode(string name, Point nodeLocation, bool centerNode, ParatextProjectType projectType, string projectId)
         {
             var node = new CorpusNodeViewModel(name)
             {
                 X = nodeLocation.X,
                 Y = nodeLocation.Y
             };
+
+            node.ProjectType = projectType;
+            node.ParatextProjectId = projectId;
 
             node.InputConnectors.Add(new ConnectorViewModel("Target"));
             //node.InputConnectors.Add(new ConnectorViewModel("In2"));
@@ -455,11 +458,14 @@ namespace SampleCode
             //
             // Create some nodes and add them to the view-model.
             //
-            var node1 = CreateNode("zz_SUR", new Point(100, 60), false);
-            var node2 = CreateNode("zz_SURBT", new Point(350, 80), false);
+            var node1 = CreateNode("zz_SUR", new Point(100, 60), false, ParatextProjectType.Standard, Guid.NewGuid().ToString());
+            var node2 = CreateNode("zz_SURBT", new Point(350, 40), false, ParatextProjectType.BackTranslation, Guid.NewGuid().ToString());
+            var node3 = CreateNode("NIV", new Point(350, 120), false, ParatextProjectType.Reference, Guid.NewGuid().ToString());
+
+
 
             //
-            // Create a connection between the nodes.
+            // Create a connection between the standard / back translation.
             //
             var connection = new ConnectionViewModel
             {
@@ -470,6 +476,14 @@ namespace SampleCode
             //
             // Add the connection to the view-model.
             //
+            DesignSurface.Connections.Add(connection);
+
+
+            connection = new ConnectionViewModel
+            {
+                SourceConnector = node1.OutputConnectors[0],
+                DestinationConnector = node3.InputConnectors[0]
+            };
             DesignSurface.Connections.Add(connection);
         }
 

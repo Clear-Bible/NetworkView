@@ -1,4 +1,5 @@
 ﻿
+using System;
 using System.Windows;
 using System.Windows.Input;
 using ClearDashboard.Wpf.Controls;
@@ -150,7 +151,8 @@ namespace SampleCode
         private void CreateNode()
         {
             var newNodePosition = Mouse.GetPosition(ProjectDesignSurface);
-            this.ViewModel.CreateNode("New Corpus!", newNodePosition, true);
+            this.ViewModel.CreateNode("New Corpus!", newNodePosition, true, ParatextProjectType.Standard,
+                Guid.NewGuid().ToString());
         }
 
         /// <summary>

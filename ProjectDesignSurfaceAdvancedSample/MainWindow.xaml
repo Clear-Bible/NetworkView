@@ -250,18 +250,33 @@
                     <!--  The margin has been selected so that the selection rect nicely covers the entire node.  -->
 
                     <Grid
-                        MinWidth="120"
+                        MinWidth="150"
                         Margin="10,6,10,6"
                         SizeChanged="OnCorpusNodeSizeChanged">
 
                         <!--  This rectangle is the main visual for the node.  -->
 
                         <Rectangle
-                            Fill="{StaticResource nodeFillBrush}"
                             RadiusX="4"
                             RadiusY="4"
                             Stroke="{StaticResource nodeBorderBrush}"
-                            StrokeThickness="1.3" />
+                            StrokeThickness="1.3">
+                            <Rectangle.Style>
+                                <Style TargetType="Rectangle">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding ProjectType}" Value="{x:Static projectDesignSurfaceModel:ParatextProjectType.Standard}">
+                                            <Setter Property="Fill" Value="{StaticResource nodeFillBrushStandardProject}" />
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding ProjectType}" Value="{x:Static projectDesignSurfaceModel:ParatextProjectType.BackTranslation}">
+                                            <Setter Property="Fill" Value="{StaticResource nodeFillBrushBacktranslationProject}" />
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding ProjectType}" Value="{x:Static projectDesignSurfaceModel:ParatextProjectType.Reference}">
+                                            <Setter Property="Fill" Value="{StaticResource nodeFillBrushReferenceProject}" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Rectangle.Style>
+                        </Rectangle>
 
                         <!--
                             This grid contains the node's connectors.
@@ -275,6 +290,7 @@
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
                                 <!--  spacer  -->
                                 <RowDefinition Height="2" />
                                 <RowDefinition Height="Auto" />
@@ -287,11 +303,21 @@
                                 Grid.ColumnSpan="3"
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center"
+                                FontWeight="Bold"
                                 Text="{Binding Name}" />
+
+                            <!--  The project type of the node.  -->
+                            <TextBlock
+                                Grid.Row="1"
+                                Grid.Column="0"
+                                Grid.ColumnSpan="3"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Text="{Binding ProjectType}" />
 
                             <!--  Displays the node's input connectors.  -->
                             <ItemsControl
-                                Grid.Row="2"
+                                Grid.Row="3"
                                 Grid.Column="0"
                                 Focusable="False"
                                 ItemTemplate="{StaticResource inputConnectorTemplate}"
@@ -299,7 +325,7 @@
 
                             <!--  Displays the node's output connectors.  -->
                             <ItemsControl
-                                Grid.Row="2"
+                                Grid.Row="3"
                                 Grid.Column="2"
                                 Focusable="False"
                                 ItemTemplate="{StaticResource outputConnectorTemplate}"
@@ -599,11 +625,15 @@
                         It wraps up both the NetworkView and drag-zooming Canvas.
                     -->
                     <Grid Width="{Binding ContentWidth}" Height="{Binding ContentHeight}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="200" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
 
                         <!--  In this sample the NetworkView is the content displayed by the ZoomAndPanControl.  -->
-
                         <controls:ProjectDesignSurface
                             x:Name="ProjectDesignSurface"
+                            Grid.Column="1"
                             ConnectionDragCompleted="OnProjectDesignSurfaceConnectionDragCompleted"
                             ConnectionDragStarted="OnProjectDesignSurfaceConnectionDragStarted"
                             ConnectionDragging="OnProjectDesignSurfaceConnectionDragging"

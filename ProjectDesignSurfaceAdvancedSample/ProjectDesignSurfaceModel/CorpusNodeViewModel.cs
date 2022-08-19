@@ -11,6 +11,7 @@ namespace ProjectDesignSurfaceModel
     /// </summary>
     public sealed class CorpusNodeViewModel : AbstractModelBase
     {
+       
         #region Private Data Members
 
         /// <summary>
@@ -78,6 +79,29 @@ namespace ProjectDesignSurfaceModel
             get => _name;
             set => Set(ref _name, value);
         }
+
+
+        private string _paratextProjectId = string.Empty;
+        /// <summary>
+        /// The paratext guid
+        /// </summary>
+        public string ParatextProjectId
+        {
+            get => _paratextProjectId;
+            set => Set(ref _paratextProjectId, value);
+        }
+
+        
+        private ParatextProjectType _projectType = ParatextProjectType.Standard;
+        /// <summary>
+        /// The paratext project type
+        /// </summary>
+        public ParatextProjectType ProjectType
+        {
+            get => _projectType;
+            set => Set(ref _projectType, value);
+        }
+
 
         /// <summary>
         /// The X coordinate for the position of the node.
